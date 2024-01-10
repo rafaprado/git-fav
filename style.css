@@ -19,7 +19,7 @@
   --button-color-hover: #065E7C;
 
   --table-background: #092D38;
-  --table-even-rows-background: #06161b80;
+  --table-odd-rows-background: #06161b80;
   --table-border-color: #4A808C;
 
   --body-background: #000000;
@@ -48,6 +48,8 @@ body, input, button {
   max-width: 112rem;
   margin: 0 auto;
   height: 100vh;
+
+  margin-top: 8rem;
 }
 
 header {
@@ -118,6 +120,7 @@ table {
   border: 1px solid var(--table-border-color);
   overflow: hidden;
   border-radius: .5rem;
+  margin-bottom: 4rem;
 }
 
 table th {
@@ -127,7 +130,11 @@ table th {
 }
 
 table tbody tr:nth-child(odd) {
-  background-color: var(--table-even-rows-background);
+  background-color: var(--table-odd-rows-background);
+}
+
+table tbody {
+  position: relative;
 }
 
 table td {
@@ -135,7 +142,6 @@ table td {
   font-weight: bold;
   font-size: 2rem;
 }
-
 
 td.user {
   display: flex;
@@ -172,13 +178,39 @@ td.user span {
   color: var(--txt-red-dark);
 }
 
-.empty-favorites {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.6rem;
-}
-
 .hide {
   display: none;
+}
+
+.empty-favorites {
+  display: none;
+  visibility: hidden;
+}
+
+.empty-table {
+  min-height: 60rem;
+}
+
+.empty-table .empty-favorites {
+  display: table-row;
+  visibility: visible;
+}
+
+.empty-table tbody td {
+  text-align: center;
+}
+
+.empty-table tbody td > * {
+  display: inline;
+  vertical-align: middle;
+}
+
+.empty-table tbody td > svg {
+  margin-right: 6rem;
+}
+
+.empty-table tbody td > h2 {
+  font-size: 4rem;
+  color: #4E5455;
+  font-weight: 700;
 }

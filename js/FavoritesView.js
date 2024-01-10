@@ -10,7 +10,6 @@ export class FavoritesView extends FavoritesEvents {
     try {
       this.favorites = Favorites.load();
       if(!this.favorites) throw new Error("ERRO: conexão mal sucedida!");
-
     }catch(e) {
       alert(e.message)
     }
@@ -24,6 +23,8 @@ export class FavoritesView extends FavoritesEvents {
 
     const row = event.target.closest("tr");
     this.favorites = Favorites.delete(row.dataset.user, this.favorites);
+
+    if(this.favorites.length === 0) this.root.querySelector("table").classList.add("empty-table");
     
     row.remove();
   }
@@ -36,6 +37,7 @@ export class FavoritesView extends FavoritesEvents {
   addUser(user) {
     if(this.favorites.find(item => item.login === user.login)) return;
 
+    this.root.querySelector("table").classList.remove("empty-table");
     this.root.querySelector("table tbody").append(this.buildRow(user));
     Favorites.save([...this.favorites, user]);
 
@@ -43,6 +45,11 @@ export class FavoritesView extends FavoritesEvents {
   }
 
   renderFavorites() {
+
+    if(this.favorites.length === 0) {
+      this.root.querySelector("table").classList.add("empty-table");
+      return;
+    }
 
     this.favorites.forEach(user => {
       this.root.querySelector("table tbody").append(this.buildRow(user));
